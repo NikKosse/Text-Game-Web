@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3a9fa45533634da68c5cc4b73eac7231" Name="Diagram1">
+        <EntityTypeShape EntityType="TextGameModel.Armor" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="TextGameModel.ArmorEnchantment" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TextGameModel.Character" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TextGameModel.Inventory" Width="2.25" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TextGameModel.Level" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TextGameModel.Location" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TextGameModel.Spell" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TextGameModel.Store" Width="1.5" PointX="3" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TextGameModel.Weapon" Width="1.5" PointX="3" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TextGameModel.WeaponEnchantment" Width="1.5" PointX="3" PointY="23.75" IsExpanded="true" />
+        <AssociationConnector Association="TextGameModel.FK__Inventory__FK_In__7C255952" ManuallyRouted="false" />
+        <AssociationConnector Association="TextGameModel.FK__Inventory__FK_In__7E0DA1C4" ManuallyRouted="false" />
+        <AssociationConnector Association="TextGameModel.FK__Character__FK_Ch__729BEF18" ManuallyRouted="false" />
+        <AssociationConnector Association="TextGameModel.FK__Character__FK_Ch__7484378A" ManuallyRouted="false" />
+        <AssociationConnector Association="TextGameModel.FK__Inventory__FK_In__7854C86E" ManuallyRouted="false" />
+        <AssociationConnector Association="TextGameModel.FK__Inventory__FK_In__00EA0E6F" ManuallyRouted="false" />
+        <AssociationConnector Association="TextGameModel.FK__Inventory__FK_In__02D256E1" ManuallyRouted="false" />
+        <AssociationConnector Association="TextGameModel.FK__Inventory__FK_In__05AEC38C" ManuallyRouted="false" />
+        <AssociationConnector Association="TextGameModel.FK__Inventory__FK_In__7A3D10E0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

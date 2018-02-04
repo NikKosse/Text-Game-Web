@@ -1,0 +1,744 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TextGameModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Armor">
+          <Key>
+            <PropertyRef Name="ArmorId" />
+          </Key>
+          <Property Name="ArmorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MissChance" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Cost" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArmorEnchantment">
+          <Key>
+            <PropertyRef Name="EnchantmentId" />
+          </Key>
+          <Property Name="EnchantmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ProtectionModifier" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="Cost" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Character">
+          <Key>
+            <PropertyRef Name="CharacterId" />
+          </Key>
+          <Property Name="CharacterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Type" Type="bit" Nullable="false" />
+          <Property Name="Health" Type="int" Nullable="false" />
+          <Property Name="Magic" Type="int" Nullable="false" />
+          <Property Name="Money" Type="int" Nullable="false" />
+          <Property Name="Experience" Type="int" Nullable="false" />
+          <Property Name="FK_Character_Level" Type="int" Nullable="false" />
+          <Property Name="FK_Character_Location" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="InventoryId" />
+          </Key>
+          <Property Name="InventoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_Inventory_Character" Type="int" />
+          <Property Name="FK_Inventory_Store" Type="int" />
+          <Property Name="FK_Inventory_Armor" Type="int" />
+          <Property Name="FK_Inventory_ArmorEnchantment" Type="int" />
+          <Property Name="ArmorEquipped" Type="bit" />
+          <Property Name="FK_Inventory_Weapon" Type="int" />
+          <Property Name="FK_Inventory_WeaponEnchantment" Type="int" />
+          <Property Name="WeaponEquipped" Type="bit" />
+          <Property Name="FK_Inventory_Spell" Type="int" />
+          <Property Name="IsPotion" Type="bit" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Level">
+          <Key>
+            <PropertyRef Name="Level" />
+          </Key>
+          <Property Name="Level" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BaseHealth" Type="int" Nullable="false" />
+          <Property Name="BaseMagic" Type="int" Nullable="false" />
+          <Property Name="ExperienceRequired" Type="int" Nullable="false" />
+          <Property Name="BaseHitChance" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="NPCMinLevel" Type="int" Nullable="false" />
+          <Property Name="NPCMaxLevel" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Spell">
+          <Key>
+            <PropertyRef Name="SpellId" />
+          </Key>
+          <Property Name="SpellId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Effect" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MagicCost" Type="int" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cost" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="PotionPriceModifier" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreId" />
+          </Key>
+          <Property Name="StoreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocationId" Type="int" Nullable="false" />
+          <Property Name="MinItemCost" Type="int" Nullable="false" />
+          <Property Name="MaxItemCost" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Weapon">
+          <Key>
+            <PropertyRef Name="WeaponId" />
+          </Key>
+          <Property Name="WeaponId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Damage" Type="int" Nullable="false" />
+          <Property Name="HitChance" Type="int" Nullable="false" />
+          <Property Name="Cost" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WeaponEnchantment">
+          <Key>
+            <PropertyRef Name="EnchantmentId" />
+          </Key>
+          <Property Name="EnchantmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="DamageModifier" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="Cost" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Character__FK_Ch__729BEF18">
+          <End Role="Level" Type="Self.Level" Multiplicity="1" />
+          <End Role="Character" Type="Self.Character" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Level">
+              <PropertyRef Name="Level" />
+            </Principal>
+            <Dependent Role="Character">
+              <PropertyRef Name="FK_Character_Level" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Character__FK_Ch__7484378A">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="Character" Type="Self.Character" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationId" />
+            </Principal>
+            <Dependent Role="Character">
+              <PropertyRef Name="FK_Character_Location" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__00EA0E6F">
+          <End Role="Weapon" Type="Self.Weapon" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Weapon">
+              <PropertyRef Name="WeaponId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_Weapon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__02D256E1">
+          <End Role="WeaponEnchantment" Type="Self.WeaponEnchantment" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WeaponEnchantment">
+              <PropertyRef Name="EnchantmentId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_WeaponEnchantment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__05AEC38C">
+          <End Role="Spell" Type="Self.Spell" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spell">
+              <PropertyRef Name="SpellId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_Spell" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__7854C86E">
+          <End Role="Character" Type="Self.Character" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Character">
+              <PropertyRef Name="CharacterId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_Character" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__7A3D10E0">
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_Store" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__7C255952">
+          <End Role="Armor" Type="Self.Armor" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Armor">
+              <PropertyRef Name="ArmorId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_Armor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__7E0DA1C4">
+          <End Role="ArmorEnchantment" Type="Self.ArmorEnchantment" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArmorEnchantment">
+              <PropertyRef Name="EnchantmentId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_ArmorEnchantment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TextGameModelStoreContainer">
+          <EntitySet Name="Armor" EntityType="Self.Armor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArmorEnchantment" EntityType="Self.ArmorEnchantment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Character" EntityType="Self.Character" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Level" EntityType="Self.Level" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Spell" EntityType="Self.Spell" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Weapon" EntityType="Self.Weapon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WeaponEnchantment" EntityType="Self.WeaponEnchantment" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Character__FK_Ch__729BEF18" Association="Self.FK__Character__FK_Ch__729BEF18">
+            <End Role="Level" EntitySet="Level" />
+            <End Role="Character" EntitySet="Character" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Character__FK_Ch__7484378A" Association="Self.FK__Character__FK_Ch__7484378A">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Character" EntitySet="Character" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__00EA0E6F" Association="Self.FK__Inventory__FK_In__00EA0E6F">
+            <End Role="Weapon" EntitySet="Weapon" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__02D256E1" Association="Self.FK__Inventory__FK_In__02D256E1">
+            <End Role="WeaponEnchantment" EntitySet="WeaponEnchantment" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__05AEC38C" Association="Self.FK__Inventory__FK_In__05AEC38C">
+            <End Role="Spell" EntitySet="Spell" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__7854C86E" Association="Self.FK__Inventory__FK_In__7854C86E">
+            <End Role="Character" EntitySet="Character" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__7A3D10E0" Association="Self.FK__Inventory__FK_In__7A3D10E0">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__7C255952" Association="Self.FK__Inventory__FK_In__7C255952">
+            <End Role="Armor" EntitySet="Armor" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__7E0DA1C4" Association="Self.FK__Inventory__FK_In__7E0DA1C4">
+            <End Role="ArmorEnchantment" EntitySet="ArmorEnchantment" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TextGameModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Armor">
+          <Key>
+            <PropertyRef Name="ArmorId" />
+          </Key>
+          <Property Name="ArmorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MissChance" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cost" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__FK_In__7C255952" FromRole="Armor" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="ArmorEnchantment">
+          <Key>
+            <PropertyRef Name="EnchantmentId" />
+          </Key>
+          <Property Name="EnchantmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProtectionModifier" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__FK_In__7E0DA1C4" FromRole="ArmorEnchantment" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="Character">
+          <Key>
+            <PropertyRef Name="CharacterId" />
+          </Key>
+          <Property Name="CharacterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="Boolean" Nullable="false" />
+          <Property Name="Health" Type="Int32" Nullable="false" />
+          <Property Name="Magic" Type="Int32" Nullable="false" />
+          <Property Name="Money" Type="Int32" Nullable="false" />
+          <Property Name="Experience" Type="Int32" Nullable="false" />
+          <Property Name="FK_Character_Level" Type="Int32" Nullable="false" />
+          <Property Name="FK_Character_Location" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Level" Relationship="Self.FK__Character__FK_Ch__729BEF18" FromRole="Character" ToRole="Level" />
+          <NavigationProperty Name="Location" Relationship="Self.FK__Character__FK_Ch__7484378A" FromRole="Character" ToRole="Location" />
+          <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__FK_In__7854C86E" FromRole="Character" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="InventoryId" />
+          </Key>
+          <Property Name="InventoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_Inventory_Character" Type="Int32" />
+          <Property Name="FK_Inventory_Store" Type="Int32" />
+          <Property Name="FK_Inventory_Armor" Type="Int32" />
+          <Property Name="FK_Inventory_ArmorEnchantment" Type="Int32" />
+          <Property Name="ArmorEquipped" Type="Boolean" />
+          <Property Name="FK_Inventory_Weapon" Type="Int32" />
+          <Property Name="FK_Inventory_WeaponEnchantment" Type="Int32" />
+          <Property Name="WeaponEquipped" Type="Boolean" />
+          <Property Name="FK_Inventory_Spell" Type="Int32" />
+          <Property Name="IsPotion" Type="Boolean" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Armor" Relationship="Self.FK__Inventory__FK_In__7C255952" FromRole="Inventory" ToRole="Armor" />
+          <NavigationProperty Name="ArmorEnchantment" Relationship="Self.FK__Inventory__FK_In__7E0DA1C4" FromRole="Inventory" ToRole="ArmorEnchantment" />
+          <NavigationProperty Name="Character" Relationship="Self.FK__Inventory__FK_In__7854C86E" FromRole="Inventory" ToRole="Character" />
+          <NavigationProperty Name="Weapon" Relationship="Self.FK__Inventory__FK_In__00EA0E6F" FromRole="Inventory" ToRole="Weapon" />
+          <NavigationProperty Name="WeaponEnchantment" Relationship="Self.FK__Inventory__FK_In__02D256E1" FromRole="Inventory" ToRole="WeaponEnchantment" />
+          <NavigationProperty Name="Spell" Relationship="Self.FK__Inventory__FK_In__05AEC38C" FromRole="Inventory" ToRole="Spell" />
+          <NavigationProperty Name="Store" Relationship="Self.FK__Inventory__FK_In__7A3D10E0" FromRole="Inventory" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="Level">
+          <Key>
+            <PropertyRef Name="Level1" />
+          </Key>
+          <Property Name="Level1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaseHealth" Type="Int32" Nullable="false" />
+          <Property Name="BaseMagic" Type="Int32" Nullable="false" />
+          <Property Name="ExperienceRequired" Type="Int32" Nullable="false" />
+          <Property Name="BaseHitChance" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Characters" Relationship="Self.FK__Character__FK_Ch__729BEF18" FromRole="Level" ToRole="Character" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NPCMinLevel" Type="Int32" Nullable="false" />
+          <Property Name="NPCMaxLevel" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Characters" Relationship="Self.FK__Character__FK_Ch__7484378A" FromRole="Location" ToRole="Character" />
+        </EntityType>
+        <EntityType Name="Spell">
+          <Key>
+            <PropertyRef Name="SpellId" />
+          </Key>
+          <Property Name="SpellId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Effect" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MagicCost" Type="Int32" Nullable="false" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cost" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PotionPriceModifier" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__FK_In__05AEC38C" FromRole="Spell" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreId" />
+          </Key>
+          <Property Name="StoreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationId" Type="Int32" Nullable="false" />
+          <Property Name="MinItemCost" Type="Int32" Nullable="false" />
+          <Property Name="MaxItemCost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__FK_In__7A3D10E0" FromRole="Store" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="Weapon">
+          <Key>
+            <PropertyRef Name="WeaponId" />
+          </Key>
+          <Property Name="WeaponId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Damage" Type="Int32" Nullable="false" />
+          <Property Name="HitChance" Type="Int32" Nullable="false" />
+          <Property Name="Cost" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__FK_In__00EA0E6F" FromRole="Weapon" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="WeaponEnchantment">
+          <Key>
+            <PropertyRef Name="EnchantmentId" />
+          </Key>
+          <Property Name="EnchantmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DamageModifier" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__FK_In__02D256E1" FromRole="WeaponEnchantment" ToRole="Inventory" />
+        </EntityType>
+        <Association Name="FK__Inventory__FK_In__7C255952">
+          <End Role="Armor" Type="Self.Armor" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Armor">
+              <PropertyRef Name="ArmorId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_Armor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__7E0DA1C4">
+          <End Role="ArmorEnchantment" Type="Self.ArmorEnchantment" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArmorEnchantment">
+              <PropertyRef Name="EnchantmentId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_ArmorEnchantment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Character__FK_Ch__729BEF18">
+          <End Role="Level" Type="Self.Level" Multiplicity="1" />
+          <End Role="Character" Type="Self.Character" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Level">
+              <PropertyRef Name="Level1" />
+            </Principal>
+            <Dependent Role="Character">
+              <PropertyRef Name="FK_Character_Level" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Character__FK_Ch__7484378A">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="Character" Type="Self.Character" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationId" />
+            </Principal>
+            <Dependent Role="Character">
+              <PropertyRef Name="FK_Character_Location" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__7854C86E">
+          <End Role="Character" Type="Self.Character" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Character">
+              <PropertyRef Name="CharacterId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_Character" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__00EA0E6F">
+          <End Role="Weapon" Type="Self.Weapon" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Weapon">
+              <PropertyRef Name="WeaponId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_Weapon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__02D256E1">
+          <End Role="WeaponEnchantment" Type="Self.WeaponEnchantment" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WeaponEnchantment">
+              <PropertyRef Name="EnchantmentId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_WeaponEnchantment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__05AEC38C">
+          <End Role="Spell" Type="Self.Spell" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spell">
+              <PropertyRef Name="SpellId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_Spell" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__FK_In__7A3D10E0">
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="FK_Inventory_Store" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TextGameEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Armors" EntityType="Self.Armor" />
+          <EntitySet Name="ArmorEnchantments" EntityType="Self.ArmorEnchantment" />
+          <EntitySet Name="Characters" EntityType="Self.Character" />
+          <EntitySet Name="Inventories" EntityType="Self.Inventory" />
+          <EntitySet Name="Levels" EntityType="Self.Level" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="Spells" EntityType="Self.Spell" />
+          <EntitySet Name="Stores" EntityType="Self.Store" />
+          <EntitySet Name="Weapons" EntityType="Self.Weapon" />
+          <EntitySet Name="WeaponEnchantments" EntityType="Self.WeaponEnchantment" />
+          <AssociationSet Name="FK__Inventory__FK_In__7C255952" Association="Self.FK__Inventory__FK_In__7C255952">
+            <End Role="Armor" EntitySet="Armors" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__7E0DA1C4" Association="Self.FK__Inventory__FK_In__7E0DA1C4">
+            <End Role="ArmorEnchantment" EntitySet="ArmorEnchantments" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Character__FK_Ch__729BEF18" Association="Self.FK__Character__FK_Ch__729BEF18">
+            <End Role="Level" EntitySet="Levels" />
+            <End Role="Character" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Character__FK_Ch__7484378A" Association="Self.FK__Character__FK_Ch__7484378A">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Character" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__7854C86E" Association="Self.FK__Inventory__FK_In__7854C86E">
+            <End Role="Character" EntitySet="Characters" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__00EA0E6F" Association="Self.FK__Inventory__FK_In__00EA0E6F">
+            <End Role="Weapon" EntitySet="Weapons" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__02D256E1" Association="Self.FK__Inventory__FK_In__02D256E1">
+            <End Role="WeaponEnchantment" EntitySet="WeaponEnchantments" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__05AEC38C" Association="Self.FK__Inventory__FK_In__05AEC38C">
+            <End Role="Spell" EntitySet="Spells" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__FK_In__7A3D10E0" Association="Self.FK__Inventory__FK_In__7A3D10E0">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TextGameModelStoreContainer" CdmEntityContainer="TextGameEntities">
+          <EntitySetMapping Name="Armors">
+            <EntityTypeMapping TypeName="TextGameModel.Armor">
+              <MappingFragment StoreEntitySet="Armor">
+                <ScalarProperty Name="ArmorId" ColumnName="ArmorId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="MissChance" ColumnName="MissChance" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArmorEnchantments">
+            <EntityTypeMapping TypeName="TextGameModel.ArmorEnchantment">
+              <MappingFragment StoreEntitySet="ArmorEnchantment">
+                <ScalarProperty Name="EnchantmentId" ColumnName="EnchantmentId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ProtectionModifier" ColumnName="ProtectionModifier" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Characters">
+            <EntityTypeMapping TypeName="TextGameModel.Character">
+              <MappingFragment StoreEntitySet="Character">
+                <ScalarProperty Name="CharacterId" ColumnName="CharacterId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Health" ColumnName="Health" />
+                <ScalarProperty Name="Magic" ColumnName="Magic" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="FK_Character_Level" ColumnName="FK_Character_Level" />
+                <ScalarProperty Name="FK_Character_Location" ColumnName="FK_Character_Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventories">
+            <EntityTypeMapping TypeName="TextGameModel.Inventory">
+              <MappingFragment StoreEntitySet="Inventory">
+                <ScalarProperty Name="InventoryId" ColumnName="InventoryId" />
+                <ScalarProperty Name="FK_Inventory_Character" ColumnName="FK_Inventory_Character" />
+                <ScalarProperty Name="FK_Inventory_Store" ColumnName="FK_Inventory_Store" />
+                <ScalarProperty Name="FK_Inventory_Armor" ColumnName="FK_Inventory_Armor" />
+                <ScalarProperty Name="FK_Inventory_ArmorEnchantment" ColumnName="FK_Inventory_ArmorEnchantment" />
+                <ScalarProperty Name="ArmorEquipped" ColumnName="ArmorEquipped" />
+                <ScalarProperty Name="FK_Inventory_Weapon" ColumnName="FK_Inventory_Weapon" />
+                <ScalarProperty Name="FK_Inventory_WeaponEnchantment" ColumnName="FK_Inventory_WeaponEnchantment" />
+                <ScalarProperty Name="WeaponEquipped" ColumnName="WeaponEquipped" />
+                <ScalarProperty Name="FK_Inventory_Spell" ColumnName="FK_Inventory_Spell" />
+                <ScalarProperty Name="IsPotion" ColumnName="IsPotion" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Levels">
+            <EntityTypeMapping TypeName="TextGameModel.Level">
+              <MappingFragment StoreEntitySet="Level">
+                <ScalarProperty Name="Level1" ColumnName="Level" />
+                <ScalarProperty Name="BaseHealth" ColumnName="BaseHealth" />
+                <ScalarProperty Name="BaseMagic" ColumnName="BaseMagic" />
+                <ScalarProperty Name="ExperienceRequired" ColumnName="ExperienceRequired" />
+                <ScalarProperty Name="BaseHitChance" ColumnName="BaseHitChance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="TextGameModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NPCMinLevel" ColumnName="NPCMinLevel" />
+                <ScalarProperty Name="NPCMaxLevel" ColumnName="NPCMaxLevel" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Spells">
+            <EntityTypeMapping TypeName="TextGameModel.Spell">
+              <MappingFragment StoreEntitySet="Spell">
+                <ScalarProperty Name="SpellId" ColumnName="SpellId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Effect" ColumnName="Effect" />
+                <ScalarProperty Name="MagicCost" ColumnName="MagicCost" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PotionPriceModifier" ColumnName="PotionPriceModifier" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stores">
+            <EntityTypeMapping TypeName="TextGameModel.Store">
+              <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="MinItemCost" ColumnName="MinItemCost" />
+                <ScalarProperty Name="MaxItemCost" ColumnName="MaxItemCost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Weapons">
+            <EntityTypeMapping TypeName="TextGameModel.Weapon">
+              <MappingFragment StoreEntitySet="Weapon">
+                <ScalarProperty Name="WeaponId" ColumnName="WeaponId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Damage" ColumnName="Damage" />
+                <ScalarProperty Name="HitChance" ColumnName="HitChance" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WeaponEnchantments">
+            <EntityTypeMapping TypeName="TextGameModel.WeaponEnchantment">
+              <MappingFragment StoreEntitySet="WeaponEnchantment">
+                <ScalarProperty Name="EnchantmentId" ColumnName="EnchantmentId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="DamageModifier" ColumnName="DamageModifier" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
