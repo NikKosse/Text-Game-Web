@@ -18,6 +18,7 @@ namespace TextGameApi.Models
         public TextGameEntities()
             : base("name=TextGameEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
