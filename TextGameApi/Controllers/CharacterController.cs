@@ -17,6 +17,13 @@ namespace TextGameApi.Controllers
     {
         private TextGameEntities db = new TextGameEntities();
 
+        private ICharacterHelper _characterHelper;
+
+        public CharacterController(ICharacterHelper characterHelper)
+        {
+            _characterHelper = characterHelper;
+        }
+
         // GET: api/Character
         public IQueryable<Character> GetCharacters()
         {
@@ -27,11 +34,18 @@ namespace TextGameApi.Controllers
         [ResponseType(typeof(Character))]
         public IHttpActionResult GetCharacter(int id)
         {
-            Character character = db.Characters.Find(id);
+            var character = db.Characters
+                    .Where(c => c.CharacterId == id)
+                    .Include(c => c.Inventories)
+                    .Include(c => c.Location)
+                    .FirstOrDefault();
+
             if (character == null)
             {
                 return NotFound();
             }
+
+            
 
             return Ok(character);
         }
