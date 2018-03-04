@@ -29,6 +29,8 @@ namespace TextGameApi.Models
         public int Experience { get; set; }
         public int FK_Character_Level { get; set; }
         public int FK_Character_Location { get; set; }
+        public Nullable<int> TotalHitChance { get; set; }
+        public Nullable<int> TotalMissChance { get; set; }
     
         public virtual Level Level { get; set; }
         public virtual Location Location { get; set; }
